@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Device Ready Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-x.x.x.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for device API libraries to load
+    //
+    function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        window.addEventListener("batterylow", onBatteryLow, false);
+        window.addEventListener("batterystatus", onBatteryStatus, false);
+        window.addEventListener("batterycritical", onBatteryCritical, false);
+    }
+
+    // Handle the batterylow event
+    //
+    function onBatteryLow(info) {
+        alert("Battery Level Low " + info.level + "%, isPlugged: " + info.isPlugged);
+    }
+    
+    // Handle the batterystatus event
+    //
+    function onBatteryStatus(info) {
+        alert("Level: " + info.level + "%, isPlugged: " + info.isPlugged);
+    }
+    
+    // Handle the batterycritical event
+    //
+    function onBatteryCritical(info) {
+        alert("Battery Level Critical " + info.level + "%, isPlugged: " + info.isPlugged);
+    }
+    </script>
+  </head>
+  <body onload="onLoad()">
+  </body>
+</html>
