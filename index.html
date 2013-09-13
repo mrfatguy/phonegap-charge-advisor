@@ -117,15 +117,16 @@
             u.innerHTML = ' ' + timestampToFormattedString(d.getTime());
             c.innerHTML = (charging) ? 'Full charge in' : 'Time left';
             
-            if(lastEvent !== 0 && !changingChargingState)
+            if((lastEvent !== 0) && (!changingChargingState))
             {
                 r.innerHTML = ((charging) ? '+' : '-') + '1% per ' + parseTime(timePerOnePercent);
                 t.innerHTML = parseTime(timePerOnePercent * energyThatMatters);
             }
             
-            i.innerHTML = (changingChargingState) ? "<p>Seems, that you've just " + ((charging) ? 'plugged in' : 'unplugged') + " your charging cable...</p>" : '';
+            i.innerHTML = (changingChargingState) ? "<p>You've just " + ((charging) ? 'plugged in' : 'unplugged') + " your charger...</p>" : '';
             
             lastEvent = d.getTime();
+            lastChargingState = charging;
         }
     
     </script>
@@ -147,7 +148,7 @@
 
     </p>
     
-    <span style="font-size: 70%">Charging / discharging rates and times are very approximate and you can't rely on them too much. They here just for fun. BTW: You won't get any values until your battery progress +/- 1%. Directly after plugging charging cable on or off you'll most likely get some very strange values.</span>
+    <span style="font-size: 70%">Charging / discharging rates and times are very approximate and you can't rely on them too much. BTW: You won't get any values until your battery progress +/- 1%. Directly after plugging charging cable on or off you'll most likely get some very strange values.</span>
 
     <p>
         
