@@ -104,11 +104,7 @@
                 timePerOnePercent = Math.round(elapsedTime / 1000),
                 energyThatMatters = (charging) ? 100 - level : level;
                 
-            if(typeof(lastChargingState) !== 'undefined')
-            {
-                changingChargingState = (lastChargingState !== charging);
-            }
-            else lastChargingState = charging;
+            if(typeof(lastChargingState) !== 'undefined') changingChargingState = (lastChargingState !== charging);
 
             s.innerHTML = state;
             l.innerHTML = level + '%';
@@ -148,7 +144,7 @@
 
     </p>
     
-    <span style="font-size: 70%">Charging / discharging rates and times are very approximate and you can't rely on them too much. BTW: You won't get any values until your battery progress +/- 1%. Directly after plugging charging cable on or off you'll most likely get some very strange values.</span>
+    <span style="font-size: 70%">Charging / discharging rates and times are very approximate and you can't rely on them too much. BTW: You won't get any values until your battery progress +/- 1%.</span>
 
     <p>
         
