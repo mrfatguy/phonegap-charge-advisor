@@ -3,7 +3,7 @@
   <head>
     <title>Device Ready Example</title>
 
-    <script type="text/javascript" charset="utf-8" src="cordova-x.x.x.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
 
     // Wait for device API libraries to load
@@ -23,22 +23,39 @@
     // Handle the batterylow event
     //
     function onBatteryLow(info) {
-        alert("Battery Level Low " + info.level + "%, isPlugged: " + info.isPlugged);
+        updateInfo('low', info.level, info.isPlugged);
     }
     
     // Handle the batterystatus event
     //
     function onBatteryStatus(info) {
-        alert("Level: " + info.level + "%, isPlugged: " + info.isPlugged);
+        updateInfo('normal', info.level, info.isPlugged);
     }
     
     // Handle the batterycritical event
     //
     function onBatteryCritical(info) {
-        alert("Battery Level Critical " + info.level + "%, isPlugged: " + info.isPlugged);
+        updateInfo('critical', info.level, info.isPlugged);
+    }
+    
+    function updateInfo(state, level, charging)
+    {
+        var
+            s = document.getElementById('state'),
+            l = document.getElementById('level'),
+            c = document.getElementById('charging');
+            
+        s.innerHTML = state;
+        l.innerHTML = level + '%';
+        c.innerHTML = (charging) ? 'true' : 'false';
     }
     </script>
   </head>
   <body onload="onLoad()">
+      
+      <div>State: <strong id="state">???</strong></div>
+      <div>Level: <strong id="level">???</strong></div>
+      <div>Charging: <strong id="charging">???</strong></div>
+      
   </body>
 </html>
