@@ -8,6 +8,7 @@
         
         var
             lastEvent = 0,
+            lastChargingState = undefined,
             debugMode = typeof(window.tinyHippos) !== 'undefined',
             spoofedBatteryLevel = (debugMode) ? 50 : undefined;
 
@@ -89,7 +90,9 @@
         {
             var
                 d = new Date(),
+                changingChargingState = false,
                 p = document.getElementById('pre'),
+                i = document.getElementById('info'),
                 m = document.getElementById('mode'),
                 r = document.getElementById('rate'),
                 t = document.getElementById('time'),
@@ -100,19 +103,27 @@
                 elapsedTime = d.getTime() - lastEvent,
                 timePerOnePercent = Math.round(elapsedTime / 1000),
                 energyThatMatters = (charging) ? 100 - level : level;
+                
+            if(typeof(lastChargingState) !== 'undefined')
+            {
+                changingChargingState = (lastChargingState !== charging);
+            }
+            else lastChargingState = charging;
 
             s.innerHTML = state;
             l.innerHTML = level + '%';
             p.innerHTML = (charging) ? 'C' : 'Disc';
             m.innerHTML = (charging) ? 'charging' : 'discharging';
             u.innerHTML = ' ' + timestampToFormattedString(d.getTime());
-            c.innerHTML = (charging) ? 'Approximate time to full charge' : 'Approximate time left on battery';
+            c.innerHTML = (charging) ? 'Full charge in' : 'Time left';
             
-            if(lastEvent !== 0)
+            if(lastEvent !== 0 && !changingChargingState)
             {
-                r.innerHTML = '1% / ' + timePerOnePercent + ' seconds';
+                r.innerHTML = ((charging) ? '+' : '-') + '1% per ' + parseTime(timePerOnePercent);
                 t.innerHTML = parseTime(timePerOnePercent * energyThatMatters);
             }
+            
+            i.innerHTML = (changingChargingState) ? "<p>Seems, that you've just " + ((charging) ? 'plugged in' : 'unplugged') + " your charging cable...</p>" : '';
             
             lastEvent = d.getTime();
         }
@@ -131,10 +142,12 @@
 
     <p>
         
-        <div><span id="pre">Disc</span>harging rate <strong id="rate">???</strong></div>
-        <div><span id="caption">Approximate time left on battery</span>: <strong id="time">???</strong></div>
+        <div><span id="pre">Disc</span>harging rate: <strong id="rate">???</strong></div>
+        <div><span id="caption">Time left</span>: <strong id="time">???</strong></div>
 
     </p>
+    
+    <span style="font-size: 70%">Charging / discharging rates and times are very approximate and you can't rely on them too much. They here just for fun. BTW: You won't get any values until your battery progress +/- 1%. Directly after plugging charging cable on or off you'll most likely get some very strange values.</span>
 
     <p>
         
@@ -142,9 +155,9 @@
         
     </p>
 
-    <p></p>
+    <p id="info"></p>
 
-    <button id="button" onclick="updateInfo(((spoofedBatteryLevel < 10) ? ((spoofedBatteryLevel < 5) ? 'critical' : 'low') : 'normal'), --spoofedBatteryLevel, true)">Test</button>
+    <button id="button" onclick="updateInfo(((spoofedBatteryLevel < 10) ? ((spoofedBatteryLevel < 5) ? 'critical' : 'low') : 'normal'), --spoofedBatteryLevel, false)">Test</button>
 
   </body>
 </html>
