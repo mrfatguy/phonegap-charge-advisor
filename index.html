@@ -5,57 +5,146 @@
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
-
-    // Wait for device API libraries to load
-    //
-    function onLoad() {
-        document.addEventListener("deviceready", onDeviceReady, false);
-    }
-
-    // device APIs are available
-    //
-    function onDeviceReady() {
-        window.addEventListener("batterylow", onBatteryLow, false);
-        window.addEventListener("batterystatus", onBatteryStatus, false);
-        window.addEventListener("batterycritical", onBatteryCritical, false);
-    }
-
-    // Handle the batterylow event
-    //
-    function onBatteryLow(info) {
-        updateInfo('low', info.level, info.isPlugged);
-    }
-    
-    // Handle the batterystatus event
-    //
-    function onBatteryStatus(info) {
-        updateInfo('normal', info.level, info.isPlugged);
-    }
-    
-    // Handle the batterycritical event
-    //
-    function onBatteryCritical(info) {
-        updateInfo('critical', info.level, info.isPlugged);
-    }
-    
-    function updateInfo(state, level, charging)
-    {
+        
         var
-            s = document.getElementById('state'),
-            l = document.getElementById('level'),
-            c = document.getElementById('charging');
+            lastEvent = 0,
+            debugMode = typeof(window.tinyHippos) !== 'undefined',
+            spoofedBatteryLevel = (debugMode) ? 50 : undefined;
+
+        function onLoad()
+        {
+            var b = document.getElementById('button');
             
-        s.innerHTML = state;
-        l.innerHTML = level + '%';
-        c.innerHTML = (charging) ? 'true' : 'false';
-    }
+            b.style.display = (debugMode) ? 'block' : 'none';
+            
+            document.addEventListener("deviceready", onDeviceReady, false);
+        }
+
+        function onDeviceReady()
+        {
+            window.addEventListener("batterylow", onBatteryLow, false);
+            window.addEventListener("batterystatus", onBatteryStatus, false);
+            window.addEventListener("batterycritical", onBatteryCritical, false);
+        }
+
+        function onBatteryLow(info)
+        {
+            updateInfo('low', info.level, info.isPlugged);
+        }
+
+        function onBatteryStatus(info)
+        {
+            updateInfo('normal', info.level, info.isPlugged);
+        }
+
+        function onBatteryCritical(info)
+        {
+            updateInfo('critical', info.level, info.isPlugged);
+        }
+        
+        function timestampToFormattedString(timestamp)
+        {
+            var
+                date = new Date(timestamp),
+                m = date.getMonth() + 1,
+                month = (m > 9) ? m : '0' + m,
+                day = (date.getDate() > 9) ? date.getDate() : '0' + date.getDate(),
+                hours = (date.getHours() > 9) ? date.getHours() : '0' + date.getHours(),
+                minutes = (date.getMinutes() > 9) ? date.getMinutes() : '0' + date.getMinutes(),
+                seconds = (date.getSeconds() > 9) ? date.getSeconds() : '0' + date.getSeconds();
+
+            return 'on <strong>' + 
+                hours + ':' +
+                minutes + ':' +
+                seconds + '</strong> at <strong>' +
+                date.getFullYear() + '-' +
+                month  + '-' +
+                day + '</strong>';
+        };
+        
+        function parseTime(timestamp)
+        {
+            if(timestamp === 0) return '<strong>0</strong> seconds';
+
+            var
+                returnText = '',
+                days = Math.floor(timestamp / 86400),
+                hours = Math.floor((timestamp - (days * 86400)) / 3600),
+                minutes = Math.floor((timestamp - (days * 86400) - (hours * 3600)) / 60),
+                seconds = timestamp - (days * 86400) - (hours * 3600) - (minutes * 60),
+                daysText = (days > 0) ? (days + ((days === 1) ? ' day' : ' days')) : '',
+                hoursText = (hours > 0) ? (hours + ((hours === 1) ? ' hour' : ' hours')) : '',
+                minutesText = (minutes > 0) ? (minutes + ((minutes === 1) ? ' minute' : ' minutes')) : '',
+                secondsText = (seconds > 0) ? (seconds + ((seconds === 1) ? ' second' : ' seconds')) : '';
+
+            returnText = daysText + ((daysText.length > 0) ? ', ' : '');
+            returnText = returnText + hoursText + ((hoursText.length > 0) ? ', ' : '');
+            returnText = returnText + minutesText + ((minutesText.length > 0) ? ' and ' : '');
+            returnText = returnText + secondsText;
+
+            return returnText;
+        }
+
+        function updateInfo(state, level, charging)
+        {
+            var
+                d = new Date(),
+                p = document.getElementById('pre'),
+                m = document.getElementById('mode'),
+                r = document.getElementById('rate'),
+                t = document.getElementById('time'),
+                s = document.getElementById('state'),
+                l = document.getElementById('level'),
+                u = document.getElementById('update'),
+                c = document.getElementById('caption'),
+                elapsedTime = d.getTime() - lastEvent,
+                timePerOnePercent = Math.round(elapsedTime / 1000),
+                energyThatMatters = (charging) ? 100 - level : level;
+
+            s.innerHTML = state;
+            l.innerHTML = level + '%';
+            p.innerHTML = (charging) ? 'C' : 'Disc';
+            m.innerHTML = (charging) ? 'charging' : 'discharging';
+            u.innerHTML = ' ' + timestampToFormattedString(d.getTime());
+            c.innerHTML = (charging) ? 'Approximate time to full charge' : 'Approximate time left on battery';
+            
+            if(lastEvent !== 0)
+            {
+                r.innerHTML = '1% / ' + timePerOnePercent + ' seconds';
+                t.innerHTML = parseTime(timePerOnePercent * energyThatMatters);
+            }
+            
+            lastEvent = d.getTime();
+        }
+    
     </script>
   </head>
-  <body onload="onLoad()">
-      
-      <div>State: <strong id="state">???</strong></div>
-      <div>Level: <strong id="level">???</strong></div>
-      <div>Charging: <strong id="charging">???</strong></div>
-      
+<body onload="onLoad()">
+
+    <p>
+
+        <div>State: <strong id="state">???</strong></div>
+        <div>Level: <strong id="level">???</strong></div>
+        <div>Mode: <strong id="mode">???</strong></div>
+
+    </p>
+
+    <p>
+        
+        <div><span id="pre">Disc</span>harging rate <strong id="rate">???</strong></div>
+        <div><span id="caption">Approximate time left on battery</span>: <strong id="time">???</strong></div>
+
+    </p>
+
+    <p>
+        
+        <div>Updated<span id="update">: never</span>.</div>
+        
+    </p>
+
+    <p></p>
+
+    <button id="button" onclick="updateInfo(((spoofedBatteryLevel < 10) ? ((spoofedBatteryLevel < 5) ? 'critical' : 'low') : 'normal'), --spoofedBatteryLevel, true)">Test</button>
+
   </body>
 </html>

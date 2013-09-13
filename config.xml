@@ -9,7 +9,7 @@
 
 	<name>Demo Battery</name>
 
-	<description>acrid.pl Demo Battery</description>
+	<description>Simple PhoneGap 2.9.0 battery events demo.</description>
 
 	<author
 		href="http://www.acrid.pl/"
