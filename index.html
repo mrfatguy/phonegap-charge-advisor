@@ -111,7 +111,7 @@
             p.innerHTML = (charging) ? 'C' : 'Disc';
             m.innerHTML = (charging) ? 'charging' : 'discharging';
             u.innerHTML = ' ' + timestampToFormattedString(d.getTime());
-            c.innerHTML = (charging) ? 'Full charge in' : 'Time left';
+            c.innerHTML = (charging) ? 'Full charge in' : 'Time on battery';
             
             if((lastEvent !== 0) && (!changingChargingState))
             {
@@ -140,7 +140,7 @@
     <p>
         
         <div><span id="pre">Disc</span>harging rate: <strong id="rate">???</strong></div>
-        <div><span id="caption">Time left</span>: <strong id="time">???</strong></div>
+        <div><span id="caption">Time on battery</span>: <strong id="time">???</strong></div>
 
     </p>
     
