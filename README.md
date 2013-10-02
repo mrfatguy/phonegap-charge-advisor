@@ -9,4 +9,4 @@ Tested on four different devices and Android versions:
 - LG GT540 with Android 2.3.3 and CyanogenMod, 
 - GSmart Rola G1317D with Android 2.2.2.
 
-All seems to be fine, after implementing [this small fix](https://github.com/phonegap/build/issues/178).
+All seems to be fine, after implementing [this small fix](https://github.com/phonegap/build/issues/178#issuecomment-24287410).
