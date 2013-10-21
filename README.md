@@ -1,12 +1,6 @@
-PhoneGap Demo Battery
-=====================
-Simple PhoneGap 2.9.0 battery events demo.
+Project [migrated](https://bitbucket.org/trejder/phonegap-battery) to BitBucket
+=========================================================================================
 
-Tested on four different devices and Android versions:
+This project [has been migrated](https://bitbucket.org/trejder/phonegap-battery) to BitBucket. There will be **no new updates to this repository**!
 
-- Samsung Galaxy Nexus with Android 4.3 (previously Android 4.2.2),
-- Sony Xperia E with Android 4.1.1,
-- LG GT540 with Android 2.3.3 and CyanogenMod, 
-- GSmart Rola G1317D with Android 2.2.2.
-
-All seems to be fine, after implementing [this small fix](https://github.com/phonegap/build/issues/178#issuecomment-24287410).
+If you wish to stay tuned, follow [new repository](https://bitbucket.org/trejder/phonegap-battery), at BitBucket...
