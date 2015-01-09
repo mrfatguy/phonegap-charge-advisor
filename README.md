@@ -1,6 +1,12 @@
-# PhoneGap Battery Events Demo
+# PhoneGap Charge Advisor Application
 
-Simple battery events demo, currently based on old PhoneGap 2.9.0.
+This is quite very simple application written in PhoneGap (so, available for Android, iOS and Windows Mobile after building), that helps you during charging of your mobile device. I wrote it for two reasons:
+
+1. (for regular user) Alert you (with preconfigured sound), that your charge cycle is completed, so you could unplug device immediately and do not waste electric energy (usually small flash light isn't enough and we overcharge our moble devices in most cases).
+
+2. (for PhoneGap developers) Provide life example of delivering AdMob ads through pure Javascript API based interface.
+ 
+This application is based on my simple battery events demo, written years ago.
 
 Tested on four different devices and Android versions:
 
@@ -9,6 +15,6 @@ Tested on four different devices and Android versions:
 - GSmart Rola G1317D with Android 2.2.2,
 - Sony Xperia E with Android 4.1.1.
 
-All seems to be fine, after implementing [this small fix](https://github.com/phonegap/build/issues/178#issuecomment-24287410).
+All seems to be fine, after implementing [this small fix](https://github.com/phonegap/build/issues/178#issuecomment-24287410). I haven't got any chance testing it on either iOS or Windows Mobile so far. Sorry.
 
 Tested **only** as compiled through [PhoneGap Build](http://build.phonegap.com). Never compiled locally or tested after such build.
