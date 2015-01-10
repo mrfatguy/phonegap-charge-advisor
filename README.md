@@ -1,3 +1,5 @@
+**Warning! Work in progress! Project unfinished! DO NOT clone!**
+
 # PhoneGap Charge Advisor Application
 
 This is quite very simple application written in PhoneGap (so, available for Android, iOS and Windows Mobile after building), that helps you during charging of your mobile device. I wrote it for two reasons:
