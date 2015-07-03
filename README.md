@@ -6,7 +6,7 @@ This is quite very simple application written in PhoneGap (so, available for And
 
 2. (for PhoneGap developers) Provide life example of delivering AdMob ads through pure Javascript API based interface.
 
-**This project ABANDONED and has became a part of [`yiinsane/charge-advisor-client`](https://github.com/yiinsane/charge-advisor-client) repository! There is no wiki, issues and no support. There will be no future updates. Unfortunately, you're on your own.**
+**This project ABANDONED and has became a part of [`yiinsane/charge-advisor-client`](https://github.com/yiinsane/charge-advisor-client) repo! There is no wiki, issues and no support. There will be no future updates.**
  
 This application is based on my simple battery events demo written some time ago.
 
@@ -21,4 +21,4 @@ All seems to be fine, after implementing [this small fix](https://github.com/pho
 
 Tested **only** as compiled through [PhoneGap Build](http://build.phonegap.com). Never compiled locally or tested after such build.
 
-**This project ABANDONED and has became a part of [`yiinsane/charge-advisor-client`](https://github.com/yiinsane/charge-advisor-client) repository! There is no wiki, issues and no support. There will be no future updates. Unfortunately, you're on your own.**
+**This project ABANDONED and has became a part of [`yiinsane/charge-advisor-client`](https://github.com/yiinsane/charge-advisor-client) repo! There is no wiki, issues and no support. There will be no future updates.**
